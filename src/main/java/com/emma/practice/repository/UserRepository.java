@@ -31,4 +31,9 @@ public class UserRepository {
 
         return  userList;
     }
+
+    public boolean existsByEmail(String email){
+        User user = getByEmail(email);
+        return  user != null;
+    }
 }

@@ -3,6 +3,7 @@ package com.emma.practice.service.impl;
 import com.emma.practice.dtos.request.CreateUserDto;
 import com.emma.practice.dtos.response.CreateUserResponse;
 import com.emma.practice.dtos.response.UserDetails;
+import com.emma.practice.exception.BadRequestException;
 import com.emma.practice.model.User;
 import com.emma.practice.repository.UserRepository;
 import com.emma.practice.service.UserService;
@@ -19,6 +20,10 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     @Override
     public CreateUserResponse createUser(CreateUserDto request) {
+
+        if (userRepository.existsByEmail(request.getEmail())){
+            throw  new BadRequestException("user already exist");
+        }
 
         User user = User.builder()
                 .email(request.getEmail())
